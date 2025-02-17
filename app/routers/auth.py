@@ -33,14 +33,16 @@ async def login(request: Request, db: Session=Depends(get_db)):
     return response
 
 @router.get("/register")
-def get_register(request: Request):
-    return templates.TemplateResponse("register.html", {"request": request})
+def get_register(request: Request, db: Session = Depends(get_db)):
+    cities = crud.get_all_cities(db)  # Fetch all cities for the dropdown
+    return templates.TemplateResponse("register.html", {"request": request, "cities": cities})
 
 @router.post("/register")
 async def register(request: Request, db: Session=Depends(get_db)):
     form = await request.form()
     user = schemas.UserCreate(username=form.get("username"), password=form.get("password"))
-    crud.create_user(db=db, user=user)
+    city_code = form.get("city_code")  # Get the selected city code
+    crud.create_user(db=db, user=user, city_code=city_code)  # Pass city_code to create_user
     return RedirectResponse(url="/login", status_code=303)  # Redirect to login page after registration
 
 @router.get("/dashboard")
