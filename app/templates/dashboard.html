@@ -40,9 +40,30 @@
                 attribution: '© OpenStreetMap'
             }).addTo(map);
 
-            // Add a marker for DIY
-            var marker = L.marker([-7.7956, 110.3695]).addTo(map);
-            marker.bindPopup("<b>DIY (Daerah Istimewa Yogyakarta)</b>").openPopup();
+            // Fetch data from the server
+            fetch('/api/books-with-cities')
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Fetched data:", data); // Debugging line
+                    const cityBookCount = {};
+
+                    // Count books per city
+                    data.forEach(item => {
+                        const cityName = item.city.city_name;
+                        if (!cityBookCount[cityName]) {
+                            cityBookCount[cityName] = 0;
+                        }
+                        cityBookCount[cityName]++;
+                    });
+
+                    // Create markers
+                    data.forEach(item => {
+                        console.log("Creating marker for:", item.city.city_name); // Debugging line
+                        var markerColor = cityBookCount[item.city.city_name] === 1 ? 'red' : 'green';
+                        var marker = L.circleMarker([item.city.latitude, item.city.longitude], { color: markerColor }).addTo(map);
+                        marker.bindPopup("<b>" + item.city.city_name + "</b><br>Total Books: " + cityBookCount[item.city.city_name]);
+                    });
+                });
         </script>
     </div>
     <footer class="text-center mt-4" style="background: linear-gradient(to right, #4caf50, #388e3c); padding: 10px; color: white; border-top: 2px solid #2e7d32;">
