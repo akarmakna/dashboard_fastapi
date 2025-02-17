@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Books</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e8f5e9; /* Light green background */
+        }
+        h2 {
+            color: #388e3c; /* Darker green for headers */
+        }
+        .btn-primary {
+            background-color: #4caf50; /* Green button */
+            border-color: #388e3c; /* Darker green border */
+        }
+        .btn-primary:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Manage Books</h2>
+            <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>City</th> <!-- New City column -->
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Book entries will be populated here -->
+                {% for book, user, city in books_with_cities %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ city.city_name }}</td> <!-- Display city name -->
+                    <td>
+                        <a href="/books/{{ book.id }}/edit" class="btn btn-warning">Edit</a>
+                        <a href="/books/{{ book.id }}/delete" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <footer class="text-center mt-4" style="background: linear-gradient(to right, #4caf50, #388e3c); padding: 10px; color: white; border-top: 2px solid #2e7d32;">
+        <p>Developed by Kampus Riset | Miftakhurrokhmat</p>
+    </footer>
+</body>
+</html>

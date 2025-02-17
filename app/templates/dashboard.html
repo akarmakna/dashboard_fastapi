@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map { height: 400px; }
+        body {
+            background-color: #e8f5e9; /* Light green background */
+        }
+        h2 {
+            color: #388e3c; /* Darker green for headers */
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <div class="hero">
+            <img src="https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png" alt="FastAPI Logo" style="width: 100px;">
+            <h1>Welcome to My Application</h1>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Dashboard</h2>
+            <div>
+                <a href="/books" class="btn btn-primary">Manage Books</a>
+                <a href="/change-password" class="btn btn-secondary">Change Password</a>
+                <a href="/logout" class="btn btn-danger">Logout</a>
+            </div>
+        </div>
+        <div id="map"></div>
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+        <script>
+            var map = L.map('map').setView([-7.7956, 110.3695], 5); // Centered on Indonesia
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            // Add a marker for DIY
+            var marker = L.marker([-7.7956, 110.3695]).addTo(map);
+            marker.bindPopup("<b>DIY (Daerah Istimewa Yogyakarta)</b>").openPopup();
+        </script>
+    </div>
+    <footer class="text-center mt-4" style="background: linear-gradient(to right, #4caf50, #388e3c); padding: 10px; color: white; border-top: 2px solid #2e7d32;">
+        <p>Developed by Kampus Riset | Miftakhurrokhmat</p>
+    </footer>
+</body>
+</html>

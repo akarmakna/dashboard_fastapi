@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e8f5e9; /* Light green background */
+        }
+        h2 {
+            color: #388e3c; /* Darker green for headers */
+        }
+        .btn-primary {
+            background-color: #4caf50; /* Green button */
+            border-color: #388e3c; /* Darker green border */
+        }
+        .btn-primary:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+        .hero {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <img src="https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png" alt="FastAPI Logo" style="width: 100px;">
+        <h1>Welcome to My Application</h1>
+    </div>
+    <div class="container">
+        <h2>Register</h2>
+        <form method="post" action="/register">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+        <p>Already have an account? <a href="/login">Login here</a></p>
+    </div>
+    <footer class="text-center mt-4" style="background: linear-gradient(to right, #4caf50, #388e3c); padding: 10px; color: white; border-top: 2px solid #2e7d32;">
+        <p>Developed by Kampus Riset | Miftakhurrokhmat</p>
+    </footer>
+</body>
+</html>
