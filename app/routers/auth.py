@@ -11,11 +11,13 @@ templates = Jinja2Templates(directory="app/templates")
 
 router = APIRouter()
 
+def check_session(request: Request):
+    if not request.cookies.get("user_id"):
+        raise HTTPException(status_code=403, detail="Not authenticated")
 
 @router.get("/login")
 def get_login(request: Request):
     return templates.TemplateResponse("login.html", {"request": request})
-
 
 @router.post("/login")
 async def login(request: Request, db: Session=Depends(get_db)):
@@ -27,14 +29,12 @@ async def login(request: Request, db: Session=Depends(get_db)):
         raise HTTPException(status_code=400, detail="Invalid credentials")
     response = RedirectResponse(url="/dashboard", status_code=303)
     response.set_cookie(key="user_id", value=str(user.id))  # Set user_id cookie
-    response.set_cookie(key="user_name", value=str(user.username))  # Set user_id cookie
+    response.set_cookie(key="user_name", value=str(user.username))  # Set user_name cookie
     return response
-
 
 @router.get("/register")
 def get_register(request: Request):
     return templates.TemplateResponse("register.html", {"request": request})
-
 
 @router.post("/register")
 async def register(request: Request, db: Session=Depends(get_db)):
@@ -43,16 +43,15 @@ async def register(request: Request, db: Session=Depends(get_db)):
     crud.create_user(db=db, user=user)
     return RedirectResponse(url="/login", status_code=303)  # Redirect to login page after registration
 
-
 @router.get("/dashboard")
 def read_dashboard(request: Request):
+    check_session(request)  # Protect the route
     return templates.TemplateResponse("dashboard.html", {"request": request})
-
 
 @router.get("/change-password")
 def get_change_password(request: Request):
+    check_session(request)  # Protect the route
     return templates.TemplateResponse("change_password.html", {"request": request})
-
 
 @router.post("/change-password")
 async def change_password(request: Request, db: Session=Depends(get_db)):
@@ -69,14 +68,12 @@ async def change_password(request: Request, db: Session=Depends(get_db)):
     db.commit()
     return RedirectResponse(url="/dashboard", status_code=303)  # Redirect to dashboard after changing password
 
-
 @router.get("/logout")
 def logout():
     response = RedirectResponse(url="/login", status_code=303)
     response.delete_cookie("user_id")  # Clear the user_id cookie
     response.delete_cookie("user_name")  # Clear the user_name cookie
     return response
-
 
 @router.get("/users", response_model=list[schemas.User])
 def read_users(db: Session=Depends(get_db)):

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Book</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e8f5e9; /* Match login background */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="d-flex justify-content-between align-items-center">
+            Add a New Book
+            <a href="/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+        </h1>
+        <form action="/books" method="post">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="author">Author</label>
+                <input type="text" class="form-control" id="author" name="author" required>
+            </div>
+            <div class="form-group">
+                <label for="user">Select User</label>
+                <select class="form-control" id="user" name="user_id" required>
+                    {% for user in users %}
+                    <option value="{{ user.id }}">{{ user.username }} ({{ user.city_code }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Book</button>
+            <a href="/books" class="btn btn-secondary">Back to List</a>
+        </form>
+    </div>
+    <footer class="text-center mt-4" style="background: linear-gradient(to right, #4caf50, #388e3c); padding: 10px; color: white; border-top: 2px solid #2e7d32;">
+        <p>Developed by Kampus Riset | Miftakhurrokhmat</p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
