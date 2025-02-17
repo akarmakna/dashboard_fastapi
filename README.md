@@ -7,7 +7,7 @@ Aplikasi ini berisi demo penerapan dashboard peta Indonesia yang menampilkan per
 ## Flowchart
 Berikut adalah flowchart yang menggambarkan alur kerja aplikasi:
 
-![Flowchart](link_ke_gambar_flowchart)
+![Flowchart](https://github.com/akarmakna/dashboard_fastapi/blob/main/screenshoots/user_flowchart.png)
 
 ## Perkenalan Tim
 - **Miftakhurrokhmat** - [Semua Fitur]
